@@ -1,0 +1,1174 @@
+{
+ "scalepad_br_backups_get_health": [
+  "id"
+ ],
+ "scalepad_br_backups_list_devices": [],
+ "scalepad_br_backups_list_health": [],
+ "scalepad_cm_action_items_create": [
+  "client_id",
+  "weakness_name"
+ ],
+ "scalepad_cm_action_items_delete": [
+  "action_item_id",
+  "client_id"
+ ],
+ "scalepad_cm_action_items_generate_signed_urls": [
+  "action_item_id",
+  "client_id",
+  "file_name",
+  "file_size_bytes"
+ ],
+ "scalepad_cm_action_items_get": [
+  "action_item_id",
+  "client_id"
+ ],
+ "scalepad_cm_action_items_list_summaries": [],
+ "scalepad_cm_action_items_map": [
+  "action_item_id",
+  "client_id"
+ ],
+ "scalepad_cm_action_items_search": [
+  "client_id"
+ ],
+ "scalepad_cm_action_items_unmap": [
+  "action_item_id",
+  "client_id"
+ ],
+ "scalepad_cm_action_items_update": [
+  "action_item_id",
+  "client_id"
+ ],
+ "scalepad_cm_action_items_upload_document": [
+  "action_item_id",
+  "client_id",
+  "file"
+ ],
+ "scalepad_cm_assessments_clear_answer": [
+  "client_id",
+  "question_code"
+ ],
+ "scalepad_cm_assessments_create_response": [
+  "client_id",
+  "question_code",
+  "response"
+ ],
+ "scalepad_cm_assessments_delete_response": [
+  "client_id",
+  "question_code",
+  "response_id"
+ ],
+ "scalepad_cm_assessments_get_question": [
+  "client_id",
+  "question_code"
+ ],
+ "scalepad_cm_assessments_get_summary": [
+  "client_id"
+ ],
+ "scalepad_cm_assessments_list_summaries": [],
+ "scalepad_cm_assessments_map_question": [
+  "client_id",
+  "question_code"
+ ],
+ "scalepad_cm_assessments_save_answer": [
+  "answer",
+  "client_id",
+  "question_code"
+ ],
+ "scalepad_cm_assessments_search_questions": [
+  "client_id"
+ ],
+ "scalepad_cm_assessments_unmap_question": [
+  "client_id",
+  "question_code"
+ ],
+ "scalepad_cm_assessments_update_response": [
+  "client_id",
+  "id",
+  "question_code"
+ ],
+ "scalepad_cm_controls_create": [
+  "client_id",
+  "name"
+ ],
+ "scalepad_cm_controls_delete": [
+  "client_id",
+  "control_id"
+ ],
+ "scalepad_cm_controls_get": [
+  "client_id",
+  "control_id"
+ ],
+ "scalepad_cm_controls_get_summary": [
+  "client_id"
+ ],
+ "scalepad_cm_controls_list_families": [
+  "client_id"
+ ],
+ "scalepad_cm_controls_list_sets": [
+  "client_id"
+ ],
+ "scalepad_cm_controls_list_summaries": [],
+ "scalepad_cm_controls_map": [
+  "client_id",
+  "control_id"
+ ],
+ "scalepad_cm_controls_search": [
+  "client_id"
+ ],
+ "scalepad_cm_controls_unmap": [
+  "client_id",
+  "control_id"
+ ],
+ "scalepad_cm_controls_update": [
+  "client_id",
+  "control_id"
+ ],
+ "scalepad_cm_documents_delete": [
+  "client_id",
+  "document_id"
+ ],
+ "scalepad_cm_documents_get_signed_url": [
+  "client_id",
+  "document_id"
+ ],
+ "scalepad_cm_evidence_create": [
+  "client_id",
+  "title"
+ ],
+ "scalepad_cm_evidence_delete": [
+  "client_id",
+  "evidence_id"
+ ],
+ "scalepad_cm_evidence_delete_schedule": [
+  "client_id",
+  "evidence_id"
+ ],
+ "scalepad_cm_evidence_get": [
+  "client_id",
+  "evidence_id"
+ ],
+ "scalepad_cm_evidence_list_summaries": [],
+ "scalepad_cm_evidence_map": [
+  "client_id",
+  "evidence_id"
+ ],
+ "scalepad_cm_evidence_refresh_mappings": [
+  "client_id"
+ ],
+ "scalepad_cm_evidence_requests_archive": [
+  "client_id",
+  "evidence_request_id"
+ ],
+ "scalepad_cm_evidence_requests_create": [
+  "client_id",
+  "evidence_id"
+ ],
+ "scalepad_cm_evidence_requests_create_link": [
+  "client_id",
+  "evidence_request_id",
+  "hyperlink",
+  "name"
+ ],
+ "scalepad_cm_evidence_requests_create_with_upload": [
+  "client_id",
+  "evidence_id",
+  "file"
+ ],
+ "scalepad_cm_evidence_requests_create_with_urls": [
+  "client_id",
+  "evidence_id",
+  "file_name",
+  "file_size_bytes"
+ ],
+ "scalepad_cm_evidence_requests_delete": [
+  "client_id",
+  "evidence_request_id"
+ ],
+ "scalepad_cm_evidence_requests_list": [
+  "client_id",
+  "evidence_id"
+ ],
+ "scalepad_cm_evidence_requests_signed_urls": [
+  "client_id",
+  "evidence_request_id",
+  "file_name",
+  "file_size_bytes"
+ ],
+ "scalepad_cm_evidence_requests_update": [
+  "client_id",
+  "evidence_request_id"
+ ],
+ "scalepad_cm_evidence_requests_upload_document": [
+  "client_id",
+  "evidence_request_id",
+  "file"
+ ],
+ "scalepad_cm_evidence_search": [
+  "client_id"
+ ],
+ "scalepad_cm_evidence_unmap": [
+  "client_id",
+  "evidence_id"
+ ],
+ "scalepad_cm_evidence_update": [
+  "client_id",
+  "evidence_id"
+ ],
+ "scalepad_cm_governance_create": [
+  "client_id",
+  "title"
+ ],
+ "scalepad_cm_governance_delete": [
+  "client_id",
+  "governance_id"
+ ],
+ "scalepad_cm_governance_get": [
+  "client_id",
+  "governance_id"
+ ],
+ "scalepad_cm_governance_list_summaries": [],
+ "scalepad_cm_governance_map": [
+  "client_id",
+  "governance_id"
+ ],
+ "scalepad_cm_governance_search": [
+  "client_id"
+ ],
+ "scalepad_cm_governance_unmap": [
+  "client_id",
+  "governance_id"
+ ],
+ "scalepad_cm_governance_update": [
+  "client_id",
+  "governance_id"
+ ],
+ "scalepad_cm_health_get": [
+  "client_id"
+ ],
+ "scalepad_cm_health_list": [],
+ "scalepad_cm_objectives_get": [
+  "client_id",
+  "framework_id",
+  "objective_id"
+ ],
+ "scalepad_cm_objectives_get_summary": [
+  "client_id"
+ ],
+ "scalepad_cm_objectives_list_summaries": [],
+ "scalepad_cm_objectives_search": [
+  "client_id",
+  "framework_id"
+ ],
+ "scalepad_cm_policies_create": [
+  "client_id",
+  "title"
+ ],
+ "scalepad_cm_policies_delete": [
+  "client_id",
+  "policy_id"
+ ],
+ "scalepad_cm_policies_delete_section": [
+  "client_id",
+  "policy_id",
+  "section_id"
+ ],
+ "scalepad_cm_policies_get": [
+  "client_id",
+  "policy_id"
+ ],
+ "scalepad_cm_policies_list_summaries": [],
+ "scalepad_cm_policies_map": [
+  "client_id",
+  "policy_id"
+ ],
+ "scalepad_cm_policies_search": [
+  "client_id"
+ ],
+ "scalepad_cm_policies_unmap": [
+  "client_id",
+  "policy_id"
+ ],
+ "scalepad_cm_policies_update": [
+  "client_id",
+  "policy_id"
+ ],
+ "scalepad_cm_policies_upsert_section": [
+  "client_id",
+  "policy_id",
+  "title"
+ ],
+ "scalepad_cm_procedures_create": [
+  "client_id",
+  "title"
+ ],
+ "scalepad_cm_procedures_delete": [
+  "client_id",
+  "procedure_id"
+ ],
+ "scalepad_cm_procedures_get": [
+  "client_id",
+  "procedure_id"
+ ],
+ "scalepad_cm_procedures_list_summaries": [],
+ "scalepad_cm_procedures_map": [
+  "client_id",
+  "procedure_id"
+ ],
+ "scalepad_cm_procedures_search": [
+  "client_id"
+ ],
+ "scalepad_cm_procedures_unmap": [
+  "client_id",
+  "procedure_id"
+ ],
+ "scalepad_cm_procedures_update": [
+  "client_id",
+  "procedure_id"
+ ],
+ "scalepad_cm_reports_get_signed_url": [
+  "client_id",
+  "report_id"
+ ],
+ "scalepad_cm_reports_list": [
+  "client_id"
+ ],
+ "scalepad_cm_risks_create": [
+  "client_id",
+  "name"
+ ],
+ "scalepad_cm_risks_delete": [
+  "client_id",
+  "risk_id"
+ ],
+ "scalepad_cm_risks_get": [
+  "client_id",
+  "risk_id"
+ ],
+ "scalepad_cm_risks_get_category": [
+  "client_id",
+  "risk_category_id"
+ ],
+ "scalepad_cm_risks_list_departments": [
+  "client_id"
+ ],
+ "scalepad_cm_risks_list_summaries": [],
+ "scalepad_cm_risks_map": [
+  "client_id",
+  "risk_id"
+ ],
+ "scalepad_cm_risks_search": [
+  "client_id"
+ ],
+ "scalepad_cm_risks_unmap": [
+  "client_id",
+  "risk_id"
+ ],
+ "scalepad_cm_risks_update": [
+  "client_id",
+  "risk_id"
+ ],
+ "scalepad_core_clients_get": [
+  "id"
+ ],
+ "scalepad_core_clients_list": [],
+ "scalepad_core_contacts_get": [
+  "id"
+ ],
+ "scalepad_core_contacts_list": [],
+ "scalepad_core_contracts_get": [
+  "id"
+ ],
+ "scalepad_core_contracts_list": [],
+ "scalepad_core_hardware_assets_get": [
+  "id"
+ ],
+ "scalepad_core_hardware_assets_list": [],
+ "scalepad_core_integration_configurations_list": [],
+ "scalepad_core_integration_vendors_list": [],
+ "scalepad_core_members_get": [
+  "id"
+ ],
+ "scalepad_core_members_list": [],
+ "scalepad_core_opportunities_get": [
+  "id"
+ ],
+ "scalepad_core_opportunities_list": [],
+ "scalepad_core_product_catalog_get": [
+  "id"
+ ],
+ "scalepad_core_product_catalog_list": [],
+ "scalepad_core_saas_assets_get": [
+  "id"
+ ],
+ "scalepad_core_saas_assets_list": [],
+ "scalepad_core_saas_users_get": [
+  "id"
+ ],
+ "scalepad_core_saas_users_list": [],
+ "scalepad_core_sites_get": [
+  "id"
+ ],
+ "scalepad_core_sites_list": [],
+ "scalepad_core_tickets_get": [
+  "id"
+ ],
+ "scalepad_core_tickets_list": [],
+ "scalepad_lm_action_items_completion_status_update": [
+  "id",
+  "is_completed"
+ ],
+ "scalepad_lm_action_items_create": [
+  "client_key",
+  "description"
+ ],
+ "scalepad_lm_action_items_delete": [
+  "id"
+ ],
+ "scalepad_lm_action_items_get": [
+  "id"
+ ],
+ "scalepad_lm_action_items_list": [],
+ "scalepad_lm_action_items_pin_update": [
+  "id",
+  "is_pinned"
+ ],
+ "scalepad_lm_action_items_reposition": [
+  "id"
+ ],
+ "scalepad_lm_action_items_update": [
+  "id",
+  "update_payload"
+ ],
+ "scalepad_lm_active_users_list": [],
+ "scalepad_lm_assessment_templates_create": [
+  "assessment_template"
+ ],
+ "scalepad_lm_assessment_templates_delete": [
+  "assessment_template_id"
+ ],
+ "scalepad_lm_assessment_templates_get": [
+  "assessment_template_id"
+ ],
+ "scalepad_lm_assessment_templates_list": [],
+ "scalepad_lm_assessment_templates_update": [
+  "assessment_template",
+  "assessment_template_id"
+ ],
+ "scalepad_lm_assessments_completion_status_update": [
+  "id",
+  "is_completed"
+ ],
+ "scalepad_lm_assessments_create": [
+  "client_key",
+  "title"
+ ],
+ "scalepad_lm_assessments_delete": [
+  "id"
+ ],
+ "scalepad_lm_assessments_evaluate": [
+  "id",
+  "question_evaluations"
+ ],
+ "scalepad_lm_assessments_get": [
+  "id"
+ ],
+ "scalepad_lm_assessments_internal_comment_update": [
+  "id",
+  "internal_comment"
+ ],
+ "scalepad_lm_assessments_list": [],
+ "scalepad_lm_assessments_question_internal_comment_update": [
+  "assessment_id",
+  "question_id"
+ ],
+ "scalepad_lm_assessments_question_public_comment_update": [
+  "assessment_id",
+  "question_id"
+ ],
+ "scalepad_lm_assessments_update": [
+  "id"
+ ],
+ "scalepad_lm_budget_availabilities_get": [
+  "client_id"
+ ],
+ "scalepad_lm_budget_contracts_list": [
+  "client_id"
+ ],
+ "scalepad_lm_budget_forecast_csv_get": [
+  "client_id"
+ ],
+ "scalepad_lm_budget_forecast_detail_pdf_get": [
+  "client_id"
+ ],
+ "scalepad_lm_budget_forecast_pdf_get": [
+  "client_id"
+ ],
+ "scalepad_lm_budget_initiatives_list": [
+  "client_id"
+ ],
+ "scalepad_lm_budget_it_debt_list": [
+  "client_id"
+ ],
+ "scalepad_lm_budget_summary_get": [
+  "client_id"
+ ],
+ "scalepad_lm_client_contacts_lookup": [
+  "client_id"
+ ],
+ "scalepad_lm_client_deliverables_list": [
+  "client_id"
+ ],
+ "scalepad_lm_client_groups_assign": [
+  "client_group_id"
+ ],
+ "scalepad_lm_client_groups_get": [
+  "client_group_id"
+ ],
+ "scalepad_lm_client_groups_list": [],
+ "scalepad_lm_client_groups_lookup": [
+  "client_key"
+ ],
+ "scalepad_lm_client_groups_unassign": [
+  "client_group_id"
+ ],
+ "scalepad_lm_client_members_lookup": [
+  "client_id"
+ ],
+ "scalepad_lm_clients_list": [],
+ "scalepad_lm_clients_lookup": [],
+ "scalepad_lm_contacts_get": [
+  "contact_id"
+ ],
+ "scalepad_lm_contacts_hidden_status_update": [
+  "contact_id",
+  "is_hidden"
+ ],
+ "scalepad_lm_contacts_list": [],
+ "scalepad_lm_contracts_assets_attach": [
+  "contract_id",
+  "hardware_keys"
+ ],
+ "scalepad_lm_contracts_assets_detach": [
+  "contract_id",
+  "hardware_keys"
+ ],
+ "scalepad_lm_contracts_create": [
+  "client_key",
+  "create_payload"
+ ],
+ "scalepad_lm_contracts_delete": [
+  "id"
+ ],
+ "scalepad_lm_contracts_get": [
+  "id"
+ ],
+ "scalepad_lm_contracts_list": [],
+ "scalepad_lm_contracts_update": [
+  "id",
+  "update_payload"
+ ],
+ "scalepad_lm_deliverable_templates_catalog_components_list": [],
+ "scalepad_lm_deliverable_templates_components_delete": [
+  "component_id",
+  "section_id",
+  "template_id"
+ ],
+ "scalepad_lm_deliverable_templates_create": [
+  "name"
+ ],
+ "scalepad_lm_deliverable_templates_create_from_deliverable": [
+  "deliverable_id"
+ ],
+ "scalepad_lm_deliverable_templates_delete": [
+  "template_id"
+ ],
+ "scalepad_lm_deliverable_templates_duplicate": [
+  "template_id"
+ ],
+ "scalepad_lm_deliverable_templates_get": [
+  "template_id"
+ ],
+ "scalepad_lm_deliverable_templates_list": [],
+ "scalepad_lm_deliverable_templates_sections_delete": [
+  "section_id",
+  "template_id"
+ ],
+ "scalepad_lm_deliverable_templates_update": [
+  "template_id"
+ ],
+ "scalepad_lm_deliverables_catalog_components_list": [
+  "client_id"
+ ],
+ "scalepad_lm_deliverables_catalog_integrations_list": [],
+ "scalepad_lm_deliverables_components_delete": [
+  "component_id",
+  "deliverable_id",
+  "section_id"
+ ],
+ "scalepad_lm_deliverables_components_refresh": [
+  "component_id",
+  "deliverable_id",
+  "section_id"
+ ],
+ "scalepad_lm_deliverables_create": [
+  "client_id",
+  "name"
+ ],
+ "scalepad_lm_deliverables_create_from_template": [
+  "client_id",
+  "template_id"
+ ],
+ "scalepad_lm_deliverables_delete": [
+  "deliverable_id"
+ ],
+ "scalepad_lm_deliverables_get": [
+  "deliverable_id"
+ ],
+ "scalepad_lm_deliverables_integrated_integrations_list": [
+  "client_id"
+ ],
+ "scalepad_lm_deliverables_list": [],
+ "scalepad_lm_deliverables_pdf_get": [
+  "deliverable_id"
+ ],
+ "scalepad_lm_deliverables_presentation_get": [
+  "deliverable_id"
+ ],
+ "scalepad_lm_deliverables_sections_delete": [
+  "deliverable_id",
+  "section_id"
+ ],
+ "scalepad_lm_deliverables_sections_refresh": [
+  "deliverable_id",
+  "section_id"
+ ],
+ "scalepad_lm_deliverables_share_link_create": [
+  "deliverable_id"
+ ],
+ "scalepad_lm_deliverables_share_link_get": [
+  "deliverable_id"
+ ],
+ "scalepad_lm_deliverables_share_link_regenerate": [
+  "deliverable_id"
+ ],
+ "scalepad_lm_deliverables_share_link_revoke": [
+  "deliverable_id"
+ ],
+ "scalepad_lm_deliverables_update": [
+  "deliverable_id"
+ ],
+ "scalepad_lm_enrollment_tokens_create": [
+  "client_id"
+ ],
+ "scalepad_lm_goal_templates_create": [
+  "goal_template"
+ ],
+ "scalepad_lm_goal_templates_delete": [
+  "goal_template_id"
+ ],
+ "scalepad_lm_goal_templates_get": [
+  "goal_template_id"
+ ],
+ "scalepad_lm_goal_templates_list": [],
+ "scalepad_lm_goal_templates_update": [
+  "goal_template",
+  "goal_template_id"
+ ],
+ "scalepad_lm_goals_action_items_attach": [
+  "action_item_id",
+  "goal_id"
+ ],
+ "scalepad_lm_goals_action_items_detach": [
+  "action_item_id",
+  "goal_id"
+ ],
+ "scalepad_lm_goals_action_items_list": [
+  "goal_id"
+ ],
+ "scalepad_lm_goals_create": [
+  "client_key",
+  "title"
+ ],
+ "scalepad_lm_goals_create_from_template": [
+  "client_key",
+  "goal_template_id"
+ ],
+ "scalepad_lm_goals_delete": [
+  "id"
+ ],
+ "scalepad_lm_goals_get": [
+  "id"
+ ],
+ "scalepad_lm_goals_initiatives_attach": [
+  "goal_id",
+  "initiative_id"
+ ],
+ "scalepad_lm_goals_initiatives_detach": [
+  "goal_id",
+  "initiative_id"
+ ],
+ "scalepad_lm_goals_initiatives_list": [
+  "goal_id"
+ ],
+ "scalepad_lm_goals_list": [],
+ "scalepad_lm_goals_meetings_attach": [
+  "goal_id",
+  "meeting_id"
+ ],
+ "scalepad_lm_goals_meetings_detach": [
+  "goal_id",
+  "meeting_id"
+ ],
+ "scalepad_lm_goals_meetings_list": [
+  "goal_id"
+ ],
+ "scalepad_lm_goals_schedule_update": [
+  "id",
+  "target_period"
+ ],
+ "scalepad_lm_goals_status_update": [
+  "id",
+  "status"
+ ],
+ "scalepad_lm_goals_update": [
+  "id"
+ ],
+ "scalepad_lm_hardware_attached_agreements_lookup": [
+  "hardware_key"
+ ],
+ "scalepad_lm_hardware_attached_initiatives_lookup": [
+  "hardware_key"
+ ],
+ "scalepad_lm_hardware_dashboard_get": [],
+ "scalepad_lm_hardware_lifecycles_list": [],
+ "scalepad_lm_hardware_list": [],
+ "scalepad_lm_hardware_overview_get": [
+  "hardware_key"
+ ],
+ "scalepad_lm_hardware_replacement_settings_get": [],
+ "scalepad_lm_initiative_templates_create": [
+  "initiative_template"
+ ],
+ "scalepad_lm_initiative_templates_delete": [
+  "initiative_template_id"
+ ],
+ "scalepad_lm_initiative_templates_duplicate": [
+  "initiative_template_id"
+ ],
+ "scalepad_lm_initiative_templates_get": [
+  "initiative_template_id"
+ ],
+ "scalepad_lm_initiative_templates_list": [],
+ "scalepad_lm_initiative_templates_update": [
+  "initiative_template",
+  "initiative_template_id"
+ ],
+ "scalepad_lm_initiatives_action_items_attach": [
+  "action_item_id",
+  "initiative_id"
+ ],
+ "scalepad_lm_initiatives_action_items_detach": [
+  "action_item_id",
+  "initiative_id"
+ ],
+ "scalepad_lm_initiatives_action_items_list": [
+  "initiative_id"
+ ],
+ "scalepad_lm_initiatives_assets_attach": [
+  "hardware_keys",
+  "initiative_id"
+ ],
+ "scalepad_lm_initiatives_assets_detach": [
+  "hardware_keys",
+  "initiative_id"
+ ],
+ "scalepad_lm_initiatives_assigned_user_update": [
+  "assigned_user_id",
+  "initiative_id"
+ ],
+ "scalepad_lm_initiatives_budget_update": [
+  "budget_line_items",
+  "id"
+ ],
+ "scalepad_lm_initiatives_create": [
+  "client_key",
+  "name"
+ ],
+ "scalepad_lm_initiatives_delete": [
+  "id"
+ ],
+ "scalepad_lm_initiatives_get": [
+  "id"
+ ],
+ "scalepad_lm_initiatives_goals_attach": [
+  "goal_id",
+  "initiative_id"
+ ],
+ "scalepad_lm_initiatives_goals_detach": [
+  "goal_id",
+  "initiative_id"
+ ],
+ "scalepad_lm_initiatives_goals_list": [
+  "initiative_id"
+ ],
+ "scalepad_lm_initiatives_list": [],
+ "scalepad_lm_initiatives_list_v2": [],
+ "scalepad_lm_initiatives_meetings_attach": [
+  "initiative_id",
+  "meeting_id"
+ ],
+ "scalepad_lm_initiatives_meetings_detach": [
+  "initiative_id",
+  "meeting_id"
+ ],
+ "scalepad_lm_initiatives_meetings_list": [
+  "initiative_id"
+ ],
+ "scalepad_lm_initiatives_opportunity_attach": [
+  "initiative_id",
+  "opportunity_id"
+ ],
+ "scalepad_lm_initiatives_opportunity_create": [
+  "field_values",
+  "initiative_id"
+ ],
+ "scalepad_lm_initiatives_opportunity_delete": [
+  "initiative_id"
+ ],
+ "scalepad_lm_initiatives_opportunity_get": [
+  "initiative_id"
+ ],
+ "scalepad_lm_initiatives_pdf_get": [
+  "initiative_id"
+ ],
+ "scalepad_lm_initiatives_priority_update": [
+  "id",
+  "priority"
+ ],
+ "scalepad_lm_initiatives_quotes_list": [
+  "initiative_id"
+ ],
+ "scalepad_lm_initiatives_recurring_update": [
+  "id",
+  "recurring_line_items"
+ ],
+ "scalepad_lm_initiatives_schedule_update": [
+  "fiscal_quarter",
+  "id"
+ ],
+ "scalepad_lm_initiatives_status_update": [
+  "id",
+  "status"
+ ],
+ "scalepad_lm_initiatives_template_apply": [
+  "initiative_id",
+  "initiative_template_id"
+ ],
+ "scalepad_lm_initiatives_ticket_create": [
+  "field_values",
+  "initiative_id"
+ ],
+ "scalepad_lm_initiatives_ticket_detach": [
+  "initiative_id"
+ ],
+ "scalepad_lm_initiatives_ticket_get": [
+  "initiative_id"
+ ],
+ "scalepad_lm_initiatives_update": [
+  "id"
+ ],
+ "scalepad_lm_insights_list": [],
+ "scalepad_lm_meeting_types_create": [
+  "label"
+ ],
+ "scalepad_lm_meeting_types_delete": [
+  "meeting_type_id"
+ ],
+ "scalepad_lm_meeting_types_list": [],
+ "scalepad_lm_meeting_types_update": [
+  "label",
+  "meeting_type_id"
+ ],
+ "scalepad_lm_meetings_action_items_attach": [
+  "action_item_id",
+  "meeting_id"
+ ],
+ "scalepad_lm_meetings_action_items_detach": [
+  "action_item_id",
+  "meeting_id"
+ ],
+ "scalepad_lm_meetings_action_items_list": [
+  "meeting_id"
+ ],
+ "scalepad_lm_meetings_completion_status_update": [
+  "id",
+  "is_completed"
+ ],
+ "scalepad_lm_meetings_contact_attendees_add": [
+  "contact_keys",
+  "id"
+ ],
+ "scalepad_lm_meetings_contact_attendees_remove": [
+  "contact_keys",
+  "id"
+ ],
+ "scalepad_lm_meetings_create": [
+  "client_key",
+  "title"
+ ],
+ "scalepad_lm_meetings_create_v2": [
+  "client_key",
+  "title"
+ ],
+ "scalepad_lm_meetings_delete": [
+  "id"
+ ],
+ "scalepad_lm_meetings_get": [
+  "id"
+ ],
+ "scalepad_lm_meetings_goals_attach": [
+  "goal_id",
+  "meeting_id"
+ ],
+ "scalepad_lm_meetings_goals_detach": [
+  "goal_id",
+  "meeting_id"
+ ],
+ "scalepad_lm_meetings_goals_list": [
+  "meeting_id"
+ ],
+ "scalepad_lm_meetings_initiatives_attach": [
+  "initiative_id",
+  "meeting_id"
+ ],
+ "scalepad_lm_meetings_initiatives_detach": [
+  "initiative_id",
+  "meeting_id"
+ ],
+ "scalepad_lm_meetings_initiatives_list": [
+  "meeting_id"
+ ],
+ "scalepad_lm_meetings_list": [],
+ "scalepad_lm_meetings_update": [
+  "id"
+ ],
+ "scalepad_lm_meetings_update_v2": [
+  "id"
+ ],
+ "scalepad_lm_meetings_user_attendees_add": [
+  "id",
+  "user_keys"
+ ],
+ "scalepad_lm_meetings_user_attendees_remove": [
+  "id",
+  "user_keys"
+ ],
+ "scalepad_lm_notes_archive_status_update": [
+  "id",
+  "is_archived"
+ ],
+ "scalepad_lm_notes_create": [
+  "client_key",
+  "title"
+ ],
+ "scalepad_lm_notes_delete": [
+  "id"
+ ],
+ "scalepad_lm_notes_get": [
+  "id"
+ ],
+ "scalepad_lm_notes_list": [],
+ "scalepad_lm_notes_update": [
+  "id"
+ ],
+ "scalepad_lm_opportunities_list": [],
+ "scalepad_lm_opportunity_create_fields_get": [],
+ "scalepad_lm_roadmap_csv_generate": [
+  "client_id"
+ ],
+ "scalepad_lm_roadmap_pdf_generate": [
+  "client_id"
+ ],
+ "scalepad_lm_roadmap_spreadsheet_generate": [
+  "client_id"
+ ],
+ "scalepad_lm_saas_utilization_summary_get": [
+  "client_id"
+ ],
+ "scalepad_lm_ticket_create_fields_get": [],
+ "scalepad_lm_user_identity_get": [],
+ "scalepad_lm_user_ui_state_get": [
+  "state_key"
+ ],
+ "scalepad_lm_user_ui_state_put": [
+  "payload",
+  "state_key"
+ ],
+ "scalepad_lm_warranty_pricing_list": [],
+ "scalepad_navigate": [
+  "domain"
+ ],
+ "scalepad_quoter_auth_authorize": [],
+ "scalepad_quoter_auth_refresh": [
+  "refresh_token"
+ ],
+ "scalepad_quoter_categories_create": [
+  "name"
+ ],
+ "scalepad_quoter_categories_delete": [
+  "id"
+ ],
+ "scalepad_quoter_categories_get": [
+  "id"
+ ],
+ "scalepad_quoter_categories_list": [],
+ "scalepad_quoter_categories_update": [
+  "id"
+ ],
+ "scalepad_quoter_contacts_create": [],
+ "scalepad_quoter_contacts_get": [
+  "id"
+ ],
+ "scalepad_quoter_contacts_list": [],
+ "scalepad_quoter_contacts_update": [
+  "id"
+ ],
+ "scalepad_quoter_datafeeds_list_supplier_items": [],
+ "scalepad_quoter_datafeeds_list_suppliers": [],
+ "scalepad_quoter_item_group_assignments_create": [
+  "item_group_id",
+  "item_id"
+ ],
+ "scalepad_quoter_item_group_assignments_delete": [
+  "id"
+ ],
+ "scalepad_quoter_item_group_assignments_get": [
+  "id"
+ ],
+ "scalepad_quoter_item_group_assignments_list": [],
+ "scalepad_quoter_item_groups_create": [
+  "name"
+ ],
+ "scalepad_quoter_item_groups_delete": [
+  "id"
+ ],
+ "scalepad_quoter_item_groups_get": [
+  "id"
+ ],
+ "scalepad_quoter_item_groups_list": [],
+ "scalepad_quoter_item_groups_update": [
+  "id"
+ ],
+ "scalepad_quoter_item_option_values_create": [
+  "item_option_id",
+  "name"
+ ],
+ "scalepad_quoter_item_option_values_delete": [
+  "id"
+ ],
+ "scalepad_quoter_item_option_values_get": [
+  "id"
+ ],
+ "scalepad_quoter_item_option_values_list": [],
+ "scalepad_quoter_item_option_values_update": [
+  "id"
+ ],
+ "scalepad_quoter_item_options_create": [
+  "item_id",
+  "name"
+ ],
+ "scalepad_quoter_item_options_delete": [
+  "id"
+ ],
+ "scalepad_quoter_item_options_get": [
+  "id"
+ ],
+ "scalepad_quoter_item_options_list": [],
+ "scalepad_quoter_item_options_update": [
+  "id"
+ ],
+ "scalepad_quoter_item_tiers_create": [
+  "item_id"
+ ],
+ "scalepad_quoter_item_tiers_delete": [
+  "id"
+ ],
+ "scalepad_quoter_item_tiers_get": [
+  "id"
+ ],
+ "scalepad_quoter_item_tiers_list": [],
+ "scalepad_quoter_item_tiers_update": [
+  "id"
+ ],
+ "scalepad_quoter_items_create": [
+  "category_id",
+  "name"
+ ],
+ "scalepad_quoter_items_delete": [
+  "id"
+ ],
+ "scalepad_quoter_items_get": [
+  "id"
+ ],
+ "scalepad_quoter_items_list": [],
+ "scalepad_quoter_items_update": [
+  "id"
+ ],
+ "scalepad_quoter_line_items_create": [
+  "name",
+  "quote_id"
+ ],
+ "scalepad_quoter_manufacturers_create": [
+  "name"
+ ],
+ "scalepad_quoter_manufacturers_delete": [
+  "id"
+ ],
+ "scalepad_quoter_manufacturers_get": [
+  "id"
+ ],
+ "scalepad_quoter_manufacturers_list": [],
+ "scalepad_quoter_manufacturers_update": [
+  "id"
+ ],
+ "scalepad_quoter_quote_templates_list": [],
+ "scalepad_quoter_quotes_create": [
+  "contact",
+  "template_id"
+ ],
+ "scalepad_quoter_quotes_create_section": [
+  "name",
+  "quote_id"
+ ],
+ "scalepad_quoter_quotes_create_section_line_item": [
+  "name",
+  "quote_id",
+  "section_id"
+ ],
+ "scalepad_quoter_quotes_get": [
+  "quote_id"
+ ],
+ "scalepad_quoter_quotes_list": [],
+ "scalepad_quoter_quotes_publish": [
+  "quote_id"
+ ],
+ "scalepad_quoter_quotes_update_line_item": [
+  "line_item_id",
+  "quote_id",
+  "section_id"
+ ],
+ "scalepad_quoter_suppliers_create": [
+  "name"
+ ],
+ "scalepad_quoter_suppliers_delete": [
+  "id"
+ ],
+ "scalepad_quoter_suppliers_get": [
+  "id"
+ ],
+ "scalepad_quoter_suppliers_list": [],
+ "scalepad_quoter_suppliers_update": [
+  "id"
+ ],
+ "scalepad_status": []
+}
