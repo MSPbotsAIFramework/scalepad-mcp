@@ -83,7 +83,11 @@ def _clean(value: str | None) -> str | None:
 
 
 class GatewayCredentialsMiddleware:
-    """Reads X-ScalePad-Api-Key (and the optional region) on /mcp requests; 401 without a key."""
+    """Reads X-ScalePad-Api-Key (and the optional region) on /mcp requests; 401 without a key.
+
+    An unknown region does not block the request (tools/list must work with any
+    values); tools report it instead.
+    """
 
     def __init__(self, app: ASGIApp):
         self.app = app
@@ -107,15 +111,13 @@ class GatewayCredentialsMiddleware:
             )(scope, receive, send)
             return
         region = (_clean(request.headers.get(HEADER_REGION)) or DEFAULT_REGION).lower()
+        header_error = None
         if region not in REGION_HOSTS:
-            await JSONResponse(
-                {"error": "Invalid header", "message": f"{HEADER_REGION} must be one of: {', '.join(REGION_HOSTS)}"},
-                status_code=400,
-            )(scope, receive, send)
-            return
+            header_error = f"{HEADER_REGION} must be one of: {', '.join(REGION_HOSTS)}"
+            region = DEFAULT_REGION
 
         request_id = (request.headers.get("x-request-id") or "").strip()[:64] or uuid.uuid4().hex[:12]
-        creds_token = _credentials_var.set(ScalePadCredentials(api_key=api_key, region=region))
+        creds_token = _credentials_var.set(ScalePadCredentials(api_key=api_key, region=region, header_error=header_error))
         rid_token = request_id_var.set(request_id)
         try:
             await self.app(scope, receive, send)

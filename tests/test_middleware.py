@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""Credential middleware: 401/400 on bad headers, per-request isolation."""
+"""Credential middleware: 401 on missing headers, deferred format errors, per-request isolation."""
 
 import asyncio
 
@@ -44,9 +44,21 @@ def test_missing_key_returns_401(http, headers):
     assert resp.json()["required_headers"] == ["X-ScalePad-Api-Key"]
 
 
-def test_unknown_region_returns_400(http):
-    resp = http.post("/mcp", json=LIST_TOOLS, headers=MCP_HEADERS | {"X-ScalePad-Api-Key": "k", "X-ScalePad-Region": "mars"})
-    assert resp.status_code == 400
+def test_unknown_region_still_lists_tools(http):
+    # The admin console refreshes the tool catalog with placeholder header values.
+    headers = {name: "placeholder" for name in ("X-ScalePad-Api-Key", "X-ScalePad-Region", "X-Quoter-Client-Id", "X-Quoter-Client-Secret")}
+    resp = http.post("/mcp", json=LIST_TOOLS, headers=MCP_HEADERS | headers)
+    assert resp.status_code == 200
+    assert "scalepad_core_clients_list" in resp.text
+
+
+def test_unknown_region_is_reported_by_tools(http):
+    seen = _run_middleware([(b"x-scalepad-api-key", b"k"), (b"x-scalepad-region", b"mars")])
+    assert "us, eu" in seen["client"].header_error
+    call = {"jsonrpc": "2.0", "id": 2, "method": "tools/call", "params": {"name": "scalepad_status", "arguments": {}}}
+    resp = http.post("/mcp", json=call, headers=MCP_HEADERS | {"X-ScalePad-Api-Key": "k", "X-ScalePad-Region": "mars"})
+    assert resp.status_code == 200
+    assert '\\"invalid_argument\\"' in resp.text and "X-ScalePad-Region must be one of" in resp.text
 
 
 def test_tools_list_over_http_with_quoter_headers_ignored(http):

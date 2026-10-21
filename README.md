@@ -49,7 +49,9 @@ How the key is sent to ScalePad: every call carries `x-api-key: <key>` to
 `https://{api|eu.api|ca.api|au.api}.scalepad.com/{core|lifecycle-manager|controlmap|backup-radar|quoter}/...`.
 Values that look like unresolved templates (`${...}`) are treated as missing.
 
-A request to `/mcp` without the key gets HTTP 401; an unknown region gets HTTP 400.
+A request to `/mcp` without the key gets HTTP 401. An unknown region does not block the request
+(so `tools/list` works with any values); tool calls then return an `invalid_argument` error naming
+the allowed regions.
 
 ## Tools
 

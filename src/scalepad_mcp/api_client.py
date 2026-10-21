@@ -88,6 +88,9 @@ class ScalePadError(Exception):
 class ScalePadCredentials:
     api_key: str
     region: str = DEFAULT_REGION
+    # Set when a header value is malformed: tools then return invalid_argument
+    # instead of calling ScalePad, while tools/list still works.
+    header_error: str | None = None
 
     def __repr__(self) -> str:  # never leak the key into logs or tracebacks
         return f"ScalePadCredentials(region={self.region!r}, api_key=<redacted>)"
@@ -99,6 +102,7 @@ class ScalePadClient:
     def __init__(self, credentials: ScalePadCredentials, http_client: httpx.AsyncClient | None = None):
         self._credentials = credentials
         self._http = http_client
+        self.header_error = credentials.header_error
 
     @property
     def region(self) -> str:
