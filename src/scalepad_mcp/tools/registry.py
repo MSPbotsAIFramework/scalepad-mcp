@@ -22,13 +22,23 @@ Each catalog argument says where its value goes:
   item      -> field of the single object sent as a one-element array body
   file / filename -> multipart upload (file is base64)
   text_json -> plain text converted to a rich-text (ProseMirror) JSON string
+
+An argument may also carry a 'compat' flag so callers of the previous contract keep working:
+  open_enum      -> the documented values are advertised, but any string is accepted; a
+                    case-insensitive match is normalized, anything else is sent unchanged
+  string_or_list -> a single string is sent as a one-item list
+  object_or_list -> a single object is sent as a one-item list
+  discount       -> a string like "10%" or "25.00" becomes the line-item discount object
+  address        -> a string becomes the address object (address_line_1)
 """
 
 import asyncio
 import base64
 import binascii
+import enum
 import inspect
 import json
+from decimal import Decimal, InvalidOperation
 from typing import Annotated, Any, Literal
 from urllib.parse import quote
 
@@ -52,7 +62,39 @@ _GROUP_SCAN_LIMIT = 50
 _GROUP_CONCURRENCY = 4
 
 
+_COMPAT_TYPES: dict[str, Any] = {
+    "string_or_list": str | list[Any],
+    "object_or_list": dict[str, Any] | list[Any],
+    "discount": str | dict[str, Any],
+    "address": str | dict[str, Any],
+}
+_COMPAT_NOTES = {
+    "string_or_list": " A single string is also accepted (sent as a one-item list).",
+    "object_or_list": " A single object is also accepted (sent as a one-item list).",
+    "discount": (
+        ' Object {"input_type": "amount" | "percentage", "input_decimal": "10.00"}, or a string:'
+        ' "10%" -> percentage 10, "10" or "$10" -> amount 10.'
+    ),
+    "address": (
+        " Object with address_line_1, address_line_2, city, state_prov_code, postal_code,"
+        " country_code (ISO alpha-2), or a plain string, sent as address_line_1."
+    ),
+}
+
+
+def _open_enum_type(arg: dict) -> Any:
+    """Documented values as a named enum (advertised in the schema) or any other string."""
+    title = "".join(part.capitalize() for part in arg["name"].split("_")) or "Value"
+    values = enum.Enum(title, [(v, v) for v in arg["enum"]], type=str)
+    return values | str
+
+
 def python_type(arg: dict) -> Any:
+    compat = arg.get("compat")
+    if compat == "open_enum":
+        return _open_enum_type(arg)
+    if compat in _COMPAT_TYPES:
+        return _COMPAT_TYPES[compat]
     if arg.get("enum"):
         return Literal[tuple(arg["enum"])]
     if arg.get("wrap_id"):
@@ -60,6 +102,78 @@ def python_type(arg: dict) -> Any:
     if arg.get("join_list"):
         return str | list[str]
     return _TYPES.get(arg.get("type"), Any)
+
+
+def describe_arg(arg: dict) -> str:
+    text = arg.get("description") or arg["name"]
+    compat = arg.get("compat")
+    if compat == "open_enum":
+        values = ", ".join(arg["enum"])
+        return f"{text} One of: {values} (case-insensitive); other values are sent to ScalePad as-is."
+    return text + _COMPAT_NOTES.get(compat, "")
+
+
+def _open_enum_value(arg: dict, value: Any) -> Any:
+    if isinstance(value, enum.Enum):
+        return value.value
+    if isinstance(value, str):
+        canonical = {v.lower(): v for v in arg["enum"]}
+        return canonical.get(value.strip().lower(), value)
+    return value
+
+
+def _json_object(text: str) -> dict | None:
+    if not text.startswith("{"):
+        return None
+    try:
+        parsed = json.loads(text)
+    except ValueError:
+        return None
+    return parsed if isinstance(parsed, dict) else None
+
+
+def _discount_value(name: str, value: Any) -> Any:
+    """Previous contract: a free string such as "10%" (percentage) or "10" (amount)."""
+    if not isinstance(value, str):
+        return value
+    text = value.strip()
+    parsed = _json_object(text)
+    if parsed is not None:
+        return parsed
+    percentage = text.endswith("%")
+    number = text.rstrip("%").strip().lstrip("$").strip()
+    try:
+        amount = Decimal(number)
+    except InvalidOperation:
+        amount = None
+    if amount is None or not amount.is_finite() or amount < 0:
+        raise ValueError(f'{name} must be a non-negative number such as "25.00" (amount) or "10%" (percentage).')
+    return {"input_type": "percentage" if percentage else "amount", "input_decimal": number}
+
+
+def _address_value(name: str, value: Any) -> Any:
+    """Previous contract: a free-text address string, sent as the first address line."""
+    if not isinstance(value, str):
+        return value
+    text = value.strip()
+    if not text:
+        raise ValueError(f"{name} must not be blank.")
+    parsed = _json_object(text)
+    return parsed if parsed is not None else {"address_line_1": text}
+
+
+def compat_value(arg: dict, value: Any) -> Any:
+    """Convert a value in the previous contract's form into what the ScalePad API expects."""
+    compat = arg.get("compat")
+    if compat == "open_enum":
+        return _open_enum_value(arg, value)
+    if compat in ("string_or_list", "object_or_list"):
+        return value if isinstance(value, list) else [value]
+    if compat == "discount":
+        return _discount_value(arg["name"], value)
+    if compat == "address":
+        return _address_value(arg["name"], value)
+    return value
 
 
 def describe(entry: dict) -> str:
@@ -114,6 +228,7 @@ def build_request(entry: dict, values: dict[str, Any]) -> dict[str, Any]:
         value = values.get(arg["name"])
         if value is None:
             continue
+        value = compat_value(arg, value)
         if arg.get("wrap_id") and isinstance(value, str):
             value = {"id": value.strip()}
         if arg.get("join_list") and isinstance(value, list):
@@ -228,9 +343,9 @@ def make_tool(entry: dict, client_factory: ClientFactory):
 
     params = []
     for arg in sorted(entry["args"], key=lambda a: not a["required"]):
-        annotation = Annotated[python_type(arg), Field(description=arg.get("description") or arg["name"])]
+        annotation = Annotated[python_type(arg), Field(description=describe_arg(arg))]
         if not arg["required"]:
-            annotation = Annotated[python_type(arg) | None, Field(description=arg.get("description") or arg["name"])]
+            annotation = Annotated[python_type(arg) | None, Field(description=describe_arg(arg))]
         params.append(
             inspect.Parameter(
                 arg["name"],
