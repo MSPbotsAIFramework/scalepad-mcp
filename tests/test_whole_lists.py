@@ -247,3 +247,17 @@ async def test_status_reports_all_five_products(monkeypatch):
     assert paths["/backup-radar/v3/clients/devices"] == "1"
     assert paths["/quoter/v1/manufacturers"] == "1"
     assert "Backup Radar" in out["note"]
+
+
+async def test_walk_continues_past_a_record_too_large_on_its_own(monkeypatch):
+    # INT: deliverable catalog component 6 of 33 is ~320k characters of nested objects on its own;
+    # the walk stopped there with "Result too large". It is now returned alone, trimmed, and the
+    # walk reaches all 33.
+    rows = _big_records(33)
+    rows[5] = {"id": 5, "configuration": {f"k{i}": {f"n{j}": "v" * 30 for j in range(30)} for i in range(300)}}
+    seen, results = await _walk(
+        monkeypatch, "scalepad_lm_deliverable_templates_catalog_components_list", {"data": rows}, {}
+    )
+    assert seen == list(range(33))
+    trimmed = next(r for r in results if r["data"] and r["data"][0]["id"] == 5)
+    assert trimmed["fields_truncated"] is True and len(trimmed["data"]) == 1
