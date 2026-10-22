@@ -37,6 +37,8 @@ PROBES = {
     "core": "/core/v1/clients",
     "lm": "/lifecycle-manager/v1/client-groups",
     "cm": "/controlmap/v1/clients/health",
+    "br": "/backup-radar/v3/clients/devices",
+    "quoter": "/v1/manufacturers",
 }
 
 
@@ -63,7 +65,7 @@ def register(mcp: FastMCP, client_factory: ClientFactory) -> None:
 
     @mcp.tool(annotations=READ_ONLY)
     async def scalepad_status() -> str:
-        """Check the ScalePad API key and region, and which products it can reach (Core, LM, ControlMap)."""
+        """Check the ScalePad API key and region, and which products it can reach (all five products)."""
 
         async def action(client: ScalePadClient) -> dict:
             products = {}
@@ -77,7 +79,10 @@ def register(mcp: FastMCP, client_factory: ClientFactory) -> None:
                 "region": client.region,
                 "products": products,
                 "domains": DOMAIN_SUMMARY,
-                "note": "402 means no subscription for that product; Core, Lifecycle Manager and Quoter are US-only.",
+                "note": (
+                    "402 means no subscription for that product; Core, Lifecycle Manager and Quoter are "
+                    "US-only, Backup Radar is US and EU."
+                ),
             }
 
         return await run_tool("scalepad_status", client_factory, action)

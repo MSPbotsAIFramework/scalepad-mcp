@@ -59,11 +59,18 @@ All tools return a JSON string. Most ids are strings (some ControlMap ids are in
 List tools are cursor-paginated: `page_size` (1-200) and the `next_cursor` from the previous
 response as `cursor`; `filter` takes `{field: value}` pairs that are sent as
 `filter[field]=value`, and the accepted fields are listed in each tool's parameter description.
+List tools whose API returns the whole list at once (no `page_size`) take optional `offset` and
+`limit`; when a result is cut by the response size limit, call again with `offset` set to the
+returned `next_offset` to continue right after the last record. `scalepad_lm_opportunities_list`,
+`scalepad_lm_warranty_pricing_list`, `scalepad_lm_opportunity_create_fields_get` and
+`scalepad_lm_ticket_create_fields_get` need `client_id` (the live API rejects calls without it),
+so they return `invalid_argument` without calling ScalePad when it is missing.
 Exports that return files (PDF, XLSX) come back as `{content_type, size_bytes, base64}` for
 small files and as metadata only for larger ones.
 
 `scalepad_navigate(domain)` lists one product's tools with their purpose, and `scalepad_status`
-checks which products the key can reach. The table lists every tool; **read** tools change
+checks which of the five products (Core, Lifecycle Manager, ControlMap, Backup Radar, Quoter) the
+key can reach. The table lists every tool; **read** tools change
 nothing, **write** tools change live records, **destructive** tools delete and cannot be
 undone.
 

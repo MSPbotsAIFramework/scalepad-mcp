@@ -45,6 +45,7 @@ from urllib.parse import quote
 from mcp.server.fastmcp import FastMCP
 from pydantic import Field
 
+from .._json import compact
 from ..api_client import ScalePadClient, ScalePadError
 from ..catalog import TOOLS
 from ._common import DESTRUCTIVE, READ_ONLY, WRITES, WRITES_IDEMPOTENT, ClientFactory, run_tool
@@ -60,6 +61,30 @@ _TYPES: dict[str | None, Any] = {
 }
 _GROUP_SCAN_LIMIT = 50
 _GROUP_CONCURRENCY = 4
+
+# The API reference marks client_id optional for these, but the live API answers
+# 422 "The client id is required" without it, so the call is refused locally.
+CLIENT_ID_REQUIRED = frozenset(
+    {
+        "scalepad_lm_opportunities_list",
+        "scalepad_lm_warranty_pricing_list",
+        "scalepad_lm_opportunity_create_fields_get",
+        "scalepad_lm_ticket_create_fields_get",
+    }
+)
+CLIENT_ID_REQUIRED_MESSAGE = (
+    "client_id is required by the ScalePad API for this tool; "
+    "get it from scalepad_lm_clients_list (client.client_id)."
+)
+# Documented in the API reference, yet some accounts answer 404 (feature not enabled).
+HARDWARE_REPLACEMENT_SETTINGS = "scalepad_lm_hardware_replacement_settings_get"
+HARDWARE_REPLACEMENT_SETTINGS_404 = (
+    "The endpoint GET /lifecycle-manager/v1/assets/hardware-replacement/settings is documented "
+    "in the ScalePad API reference but returned 404 for this account, so the hardware replacement "
+    "feature may not be enabled for it."
+)
+_OFFSET_DESCRIPTION = "Record position to start from (0-based); pass next_offset from the previous result."
+_LIMIT_DESCRIPTION = "Records to return (default: as many as fit the response size limit)."
 
 
 _COMPAT_TYPES: dict[str, Any] = {
@@ -176,11 +201,49 @@ def compat_value(arg: dict, value: Any) -> Any:
     return value
 
 
+def is_whole_list(entry: dict) -> bool:
+    """A read tool whose API returns the whole list at once (no paging parameters)."""
+    return entry["kind"] == "read" and not entry.get("paged") and entry["name"].endswith("_list")
+
+
+def page_whole_list(data: Any, offset: int | None, limit: int | None) -> Any:
+    """Slice a whole-list result locally so it can be walked with offset / next_offset.
+
+    The list is the bare result or the largest list value of an object. The output
+    carries count, total, offset, has_more and next_offset, plus ``_resume`` so a
+    result cut by the size limit continues right after the last record returned.
+    """
+    if isinstance(data, list):
+        key, items, rest = "items", data, {}
+    elif isinstance(data, dict):
+        list_keys = [k for k, v in data.items() if isinstance(v, list)]
+        if not list_keys:
+            return data
+        key = max(list_keys, key=lambda k: len(compact(data[k])))
+        items, rest = data[key], data
+    else:
+        return data
+    start = offset or 0
+    end = len(items) if limit is None else min(start + limit, len(items))
+    end = max(end, start)
+    page = items[start:end]
+    has_more = end < len(items)
+    result: dict[str, Any] = {key: page, "count": len(page), "total": len(items), "offset": start, "has_more": has_more}
+    if has_more:
+        result["next_offset"] = end
+    for k, v in rest.items():
+        result.setdefault(k, v)
+    result["_resume"] = {"key": "next_offset", "start": start}
+    return result
+
+
 def describe(entry: dict) -> str:
     """Tool description: what it does, then paging / safety notes."""
     lines = [entry["summary"]]
     if entry.get("detail"):
         lines.append(entry["detail"])
+    if entry["name"] in CLIENT_ID_REQUIRED:
+        lines.append("client_id is required by the API (get it from scalepad_lm_clients_list).")
     if entry.get("paged"):
         lines.append("Cursor-paginated: page_size 1-200; pass next_cursor from the response as cursor.")
     if entry["kind"] == "destructive":
@@ -322,22 +385,35 @@ async def client_groups_for_client(client: ScalePadClient, client_key: str) -> d
 def make_tool(entry: dict, client_factory: ClientFactory):
     name = entry["name"]
 
+    whole_list = is_whole_list(entry)
+
     async def tool(**kwargs: Any) -> str:
+        offset = kwargs.pop("offset", None) if whole_list else None
+        limit = kwargs.pop("limit", None) if whole_list else None
+
         async def action(client: ScalePadClient) -> Any:
             special = entry.get("special")
             if special == "unsupported":
                 raise ValueError(entry.get("detail") or "Not available in the ScalePad API.")
             if special == "client_groups_for_client":
                 return await client_groups_for_client(client, str(kwargs.get("client_key") or ""))
+            if name in CLIENT_ID_REQUIRED and not str(kwargs.get("client_id") or "").strip():
+                raise ValueError(CLIENT_ID_REQUIRED_MESSAGE)
             request = build_request(entry, kwargs)
-            return await client.request(
-                request["method"],
-                entry["product"],
-                request["path"],
-                query=request["query"],
-                json_body=request.get("json_body"),
-                files=request.get("files"),
-            )
+            try:
+                result = await client.request(
+                    request["method"],
+                    entry["product"],
+                    request["path"],
+                    query=request["query"],
+                    json_body=request.get("json_body"),
+                    files=request.get("files"),
+                )
+            except ScalePadError as e:
+                if name == HARDWARE_REPLACEMENT_SETTINGS and e.status_code == 404:
+                    raise ScalePadError(404, HARDWARE_REPLACEMENT_SETTINGS_404) from e
+                raise
+            return page_whole_list(result, offset, limit) if whole_list else result
 
         return await run_tool(name, client_factory, action)
 
@@ -354,6 +430,16 @@ def make_tool(entry: dict, client_factory: ClientFactory):
                 annotation=annotation,
             )
         )
+    if whole_list:
+        for arg_name, minimum, text in (("offset", 0, _OFFSET_DESCRIPTION), ("limit", 1, _LIMIT_DESCRIPTION)):
+            params.append(
+                inspect.Parameter(
+                    arg_name,
+                    inspect.Parameter.KEYWORD_ONLY,
+                    default=None,
+                    annotation=Annotated[int | None, Field(ge=minimum, description=text)],
+                )
+            )
     tool.__name__ = name
     tool.__doc__ = describe(entry)
     tool.__signature__ = inspect.Signature(params, return_annotation=str)
