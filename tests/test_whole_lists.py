@@ -168,8 +168,8 @@ async def test_bare_list_result_is_wrapped_as_items(monkeypatch):
 async def test_negative_offset_and_zero_limit_are_rejected(monkeypatch):
     rec = Recorder({"data": [{"id": 1}]})
     for args in ({"offset": -1}, {"limit": 0}):
-        with pytest.raises(Exception):  # noqa: B017 - FastMCP reports the schema violation
-            await _call(monkeypatch, rec, "scalepad_lm_insights_list", args)
+        out = await _call(monkeypatch, rec, "scalepad_lm_insights_list", args)
+        assert out["error"]["code"] == "invalid_argument"
     assert rec.requests == []
 
 
